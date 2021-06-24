@@ -1,8 +1,11 @@
-# eksctl-manifests
-bunch of simple manifsets to feed into eksctl 
+Collection of handy things for use when running EKS in your labs for repro and what not
+Includes:
+   - bunch of simple manifsets to feed into eksctl 
+   - links to useful tools 
+   - some handy shell aliases for optimized short hand 
 
-just need to swap the values in the manifests for values that are specific to your account 
-can extend by reviewing the schema here: https://eksctl.io/usage/schema/
+for the eksctl manifests, you just need to swap the values in the manifests for values that are specific to your account 
+the files can be extended by reviewing the schema here: https://eksctl.io/usage/schema/
 
 In this case, there's a total of 4 manifests:
    - Cluster Config / Node Group for a cluster deployed into an already existant VPC with subnets
