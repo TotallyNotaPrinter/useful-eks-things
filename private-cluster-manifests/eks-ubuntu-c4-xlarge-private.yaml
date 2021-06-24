@@ -1,0 +1,30 @@
+# This template Assumes you'll be using an Ubuntu AMI from here: https://cloud-images.ubuntu.com/docs/aws/eks/ the AMI in the template is for k8s 1.20
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: << cluster name >>
+  region: us-west-2
+
+nodeGroups:        
+  - name: << name >>
+    privateNetworking: true    
+    tags:
+      'Name': 'c4.xlarge'
+      'auto-delete': 'no'
+    minSize: 1
+    desiredCapacity: 1
+    maxSize: 1    
+    instanceType: c4.xlarge
+    ami: ami-0ef3079df399ca0a9 
+    ssh:
+      publicKeyName: << pub key name >>
+    preBootstrapCommands: 
+      - "sed -i 's/cgroupfs*/systemd/' /etc/eks/bootstrap.sh"
+    overrideBootstrapCommand: |
+      #!/bin/bash
+      /etc/eks/bootstrap.sh << cluster name >> --apiserver-endpoint << API Server Endpoint >> --b64-cluster-ca << b64-cluster-ca  >>
+      snap set kubelet-eks cgroup-driver=systemd 
+    volumeSize: 500
+    securityGroups:
+      attachIDs:
+        - << shared worker node SG id >>

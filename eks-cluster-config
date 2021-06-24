@@ -1,0 +1,27 @@
+# For the creation of an EKS Cluster in an already existant VPC
+kind: ClusterConfig
+apiVersion: eksctl.io/v1alpha5
+metadata:
+  name: hive
+  region: us-west-2
+  version: "1.20"
+  tags: {"auto-delete": "no"}
+iam:
+  serviceRoleARN: << subnet id >>
+  withOIDC: True
+vpc:
+  id: << vpc id >>
+  subnets:
+    private: 
+      us-west-2b: 
+        id: << subnet id >>
+      us-west-2a: 
+        id: << subnet id >>
+    public:
+      us-west-2a: 
+        id: << subnet id >>
+      us-west-2b: 
+        id: << subnet id >>
+cloudwatch:
+  clusterLogging:
+    enableTypes: ["*"]

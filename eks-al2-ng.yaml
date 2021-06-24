@@ -1,0 +1,29 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: << cluster name >>
+  region: us-west-2
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["*"]
+nodeGroups:        
+  - name: << name >>
+    privateNetworking: true    
+    tags:
+      'Name': 'al2-ng'
+      'auto-delete': 'no'
+    minSize: 1
+    desiredCapacity: 1
+    maxSize: 1    
+    instanceType: m5.large
+    ami: ami-0ef2b4aeb23264334 
+    ssh:
+      publicKeyName: << pub key name >>
+    overrideBootstrapCommand: |
+      #!/bin/bash
+      /etc/eks/bootstrap.sh << cluster name >>
+    volumeSize: 500
+    securityGroups:
+      attachIDs:
+        - << worker node sg >>
+
